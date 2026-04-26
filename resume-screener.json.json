@@ -1,0 +1,603 @@
+{
+  "name": "Resume Screener",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        48
+      ],
+      "id": "a375aa40-15c8-4373-a3a3-406d8a423254",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5dc019bd-1e08-474c-9aec-f763ea0aa063",
+              "leftValue": "={{ $json.score }}",
+              "rightValue": 70,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2000,
+        48
+      ],
+      "id": "d4694275-0c4a-4bb7-a7b6-b898eeca67fe",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1whsbH00hQcreJhFcSNj8336SEPP8ACJgy4HZS8U2sno",
+          "mode": "list",
+          "cachedResultName": "Resume_Screener_Results",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1whsbH00hQcreJhFcSNj8336SEPP8ACJgy4HZS8U2sno/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1083506926,
+          "mode": "list",
+          "cachedResultName": "Results",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1whsbH00hQcreJhFcSNj8336SEPP8ACJgy4HZS8U2sno/edit#gid=1083506926"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.candidate_name }}",
+            "Score": "={{ $json.score }}",
+            "Recommendation": "={{ $json.recommendation }}",
+            "Summary": "={{ $json.summary }}",
+            "Skills Matched": "={{ $json.skills_matched.join(', ') }}",
+            "Skills Missing": "={{ $json.skills_missing.join(', ') }}",
+            "Experience Years": "={{ $json.years_of_experience }}",
+            "Red Flags": "={{ $json.red_flags.join(', ') }}",
+            "Strengths": "={{ $json.strengths.join(', ') }}",
+            "Weaknesses": "={{ $json.weaknesses.join(', ') }}",
+            "Status": "={{ $json.score >= 70 ? 'SHORTLISTED' : 'REJECTED' }}",
+            "Education": "={{ $json.education }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Recommendation",
+              "displayName": "Recommendation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Skills Matched",
+              "displayName": "Skills Matched",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Skills Missing",
+              "displayName": "Skills Missing",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Experience Years",
+              "displayName": "Experience Years",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Education",
+              "displayName": "Education",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Red Flags",
+              "displayName": "Red Flags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Strengths",
+              "displayName": "Strengths",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Weaknesses",
+              "displayName": "Weaknesses",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        32
+      ],
+      "id": "fb689f3d-f48e-401a-b1b7-790f9063b667",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "oEmsMX0kxxhu8ILa",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "Application Update - You've been shortlisted!",
+        "emailType": "text",
+        "message": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2256,
+        -176
+      ],
+      "id": "f1b74fcd-ee1b-4045-9658-f5bb9bb4573e",
+      "name": "Send a message",
+      "webhookId": "6fed9df1-58f9-4f39-a541-487570f714db",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "h7bGqy0OCwN8VKCn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "=Rejected: {{ $json.candidate_name }} — {{ $json.score }}/100",
+        "emailType": "text",
+        "message": "=Candidate: {{ $json.candidate_name }} Score: {{ $json.score }}/100 Recommendation: {{ $json.recommendation }} Skills Missing: {{ $json.skills_missing.join(', ') }} Summary: {{ $json.summary }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2288,
+        240
+      ],
+      "id": "c0f5d7bd-f6ee-43fc-a6f7-179913d06ee5",
+      "name": "Send a message1",
+      "webhookId": "4b2d0a87-099a-4419-a6c7-16a6767c4b38",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "h7bGqy0OCwN8VKCn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "129xMLghv0YB3olNry4rlEa35rL381Gz0m0ZRt_f2NYo",
+          "mode": "list",
+          "cachedResultName": "job_descriptions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/129xMLghv0YB3olNry4rlEa35rL381Gz0m0ZRt_f2NYo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1041880054,
+          "mode": "list",
+          "cachedResultName": "job_descriptions.csv",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/129xMLghv0YB3olNry4rlEa35rL381Gz0m0ZRt_f2NYo/edit#gid=1041880054"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1120,
+        32
+      ],
+      "id": "580ea883-d8b7-4da6-bf21-6e71646aa98d",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kflGsz9Vj0pJrEUx",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMonth"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1f-FgL6LtnBlUQFtUaSd4pODfYH8uHYlu",
+          "mode": "list",
+          "cachedResultName": "Resume Screener Workflow",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1f-FgL6LtnBlUQFtUaSd4pODfYH8uHYlu"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        48
+      ],
+      "id": "2e0f1696-41fb-4fb3-9b98-1b068e2d516b",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GrYtfAyF3RfMBGck",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Google Drive Trigger').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        32,
+        48
+      ],
+      "id": "edcd13cd-5a56-4968-98bc-e0a3b3df8954",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GrYtfAyF3RfMBGck",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert HR analyst. Extract and analyse the following resume carefully.\n\nResume:\n{{ $('Extract from File').item.json.text }}\n\nReturn ONLY this JSON, no other text:\n{\n  \"candidate_name\": \"\",\n  \"email\": \"\",\n  \"phone\": \"\",\n  \"location\": \"\",\n  \"years_of_experience\": 0,\n  \"education\": \"\",\n  \"skills\": [],\n  \"tools_and_technologies\": [],\n  \"strengths\": [],\n  \"weaknesses\": [],\n  \"achievements\": [],\n  \"red_flags\": []\n}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        480,
+        48
+      ],
+      "id": "da69f26c-70e8-4bc7-9b6f-e2d92be21f26",
+      "name": "Resume Analyser"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        480,
+        288
+      ],
+      "id": "291e3136-1b31-46b7-bfae-ae190599e944",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "6MzcHQS1YA5xKFYP",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let raw = $input.first().json.output || $input.first().json.text || '';\n\nif (typeof raw === 'string') {\n  raw = raw.replace(/\\\\n/g, ' ').replace(/\\\\\"/g, '\"').replace(/\\\\\\\\/g, '\\\\');\n}\n\nconst start = raw.indexOf('{');\nconst end = raw.lastIndexOf('}');\n\nif (start === -1 || end === -1) {\n  throw new Error('PARSE_ERROR: No JSON found in LLM response');\n}\n\nraw = raw.substring(start, end + 1);\n\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch(e) {\n  throw new Error(`PARSE_ERROR: ${e.message}`);\n}\n\nreturn [{ json: parsed }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        32
+      ],
+      "id": "f4bac794-8339-43df-9970-2d34bf69fbe7",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a senior HR recruiter. Score this candidate against the job description below.\n\nJOB DESCRIPTION:\n{{ $('Get row(s) in sheet').item.json.Description }}\n\nCANDIDATE PROFILE:\nName:{{ $('Code in JavaScript').item.json.candidate_name }}\nExperience: {{ $('Code in JavaScript').item.json.years_of_experience }} years\nSkills: {{ $('Code in JavaScript').item.json.skills.join(', ') }}\nTools: {{ $('Code in JavaScript').item.json.tools_and_technologies.join(', ') }}\nStrengths: {{ $('Code in JavaScript').item.json.strengths.join(', ') }}\nWeaknesses: {{ $('Code in JavaScript').item.json.weaknesses.join(', ') }}\nAchievements: {{ $('Code in JavaScript').item.json.achievements.join(', ') }}\nRed Flags: {{ $('Code in JavaScript').item.json.red_flags.join(', ') }}i\n\nReturn ONLY this JSON, no other text:\n{\n  \"score\": 0,\n  \"recommendation\": \"SHORTLIST\" | \"MAYBE\" | \"REJECT\",\n  \"skills_matched\": [],\n  \"skills_missing\": [],\n  \"summary\": \"\"\n}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1392,
+        48
+      ],
+      "id": "35c00ad0-0cb5-47b8-af61-e887eb8138de",
+      "name": "HR Scorer"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        256
+      ],
+      "id": "35ad43da-ed42-4c38-a232-396289b3a192",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "6MzcHQS1YA5xKFYP",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let raw = $input.first().json.output || $input.first().json.text || '';\n\nif (typeof raw === 'string') {\n  raw = raw.replace(/\\\\n/g, ' ').replace(/\\\\\"/g, '\"').replace(/\\\\\\\\/g, '\\\\');\n}\n\nconst start = raw.indexOf('{');\nconst end = raw.lastIndexOf('}');\n\nif (start === -1 || end === -1) {\n  throw new Error('PARSE_ERROR: No JSON found in HR Scorer response');\n}\n\nraw = raw.substring(start, end + 1);\n\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch(e) {\n  throw new Error(`PARSE_ERROR: ${e.message}`);\n}\n\nconst candidateData = $('Code in JavaScript').first().json;\n\nreturn [{ json: {\n  ...parsed,\n  candidate_name: candidateData.candidate_name,\n  email: candidateData.email,\n  phone: candidateData.phone,\n  location: candidateData.location,\n  years_of_experience: candidateData.years_of_experience,\n  education: candidateData.education,\n  strengths: candidateData.strengths,\n  weaknesses: candidateData.weaknesses,\n  red_flags: candidateData.red_flags,\n  file_name: $('Google Drive Trigger').first().json.name,\n  timestamp: new Date().toISOString()\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        48
+      ],
+      "id": "8dc2bdb5-f389-4720-beb7-00555f67702a",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Resume Analyser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "HR Scorer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resume Analyser": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Resume Analyser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "HR Scorer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HR Scorer": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "dd7f1626-dd6f-44a5-b6ff-f185c4a6e397",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9794776b1178134f7b0843032bfc0912bd084afd15527e7a20a19f201836500f"
+  },
+  "id": "hsoUqUp20986t2B8",
+  "tags": []
+}
